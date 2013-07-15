@@ -9,18 +9,151 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#6bc8ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.theblue {
+    background: rgb(208,228,247); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(208,228,247,1) 0%, rgba(115,177,231,1) 24%, rgba(10,119,213,1) 50%, rgba(83,159,225,1) 79%, rgba(135,188,234,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(208,228,247,1)), color-stop(24%,rgba(115,177,231,1)), color-stop(50%,rgba(10,119,213,1)), color-stop(79%,rgba(83,159,225,1)), color-stop(100%,rgba(135,188,234,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* IE10+ */
+    background: linear-gradient(135deg, rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#87bcea',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.reverse-sky {
+    background: rgb(126,133,234); /* Old browsers */
+    background: -moz-linear-gradient(45deg,  rgba(126,133,234,1) 0%, rgba(83,203,241,1) 69%, rgba(7,246,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(126,133,234,1)), color-stop(69%,rgba(83,203,241,1)), color-stop(100%,rgba(7,246,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  rgba(126,133,234,1) 0%,rgba(83,203,241,1) 69%,rgba(7,246,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  rgba(126,133,234,1) 0%,rgba(83,203,241,1) 69%,rgba(7,246,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  rgba(126,133,234,1) 0%,rgba(83,203,241,1) 69%,rgba(7,246,255,1) 100%); /* IE10+ */
+    background: linear-gradient(45deg,  rgba(126,133,234,1) 0%,rgba(83,203,241,1) 69%,rgba(7,246,255,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7e85ea', endColorstr='#07f6ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.halo {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+.heavy-box {
+    -webkit-box-shadow: 4px -4px 5px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    4px -4px 5px rgba(50, 50, 50, 0.75);
+    box-shadow:         4px -4px 5px rgba(50, 50, 50, 0.75);
+}
+
+.border(@r) {
+    -webkit-border-radius: @r;
+    -moz-border-radius: @r;
+    border-radius: @r;
+}
+
+
+
+@white: #fff;
+@black: #333;
+@banner-blue: #3399FE;
+@tan: #FBF8F1;
+
+// most blue font is this blue
+//@darker-blue: #5BADFF;
+@darker-blue: blue;
 
 body {
     font-family: "Times New Roman", Times, serif;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 1em;
+    background: lightblue;
+    color: @black;
 }
 
+h1 {
+    font-family: "Pathway Gothic One", sans-serif;
+    font-size: 2.3em;
+    line-height: 0.1em;
+    font-weight: normal;
+    margin: 10px 0 0 0;
+}
+
+h2 {
+    font-size: 1.8em;
+    font-weight: lighter;
+    margin: 20px 0;
+}
+
+h3 {
+    font-size: 1.4em;
+    font-weight: lighter;
+    margin: 15px 0;
+}
+
+h4 {
+    font-size: 1em;
+    font-weight: lighter;
+    margin: 10px 0;
+}
+
+p {
+    margin: 0;
+}
+
+.big {
+    font-size: 1.3em;
+    line-height: 2em;
+    font-weight: bold;
+}
+
+.arial {
+    font-family: Arial, sans-serif;
+}
+
+a:link, a:visited, a:hover, a:active, { text-decoration: none; }
+a, button, .clickable { cursor: pointer; }
+
+.underline > a:link,
+.underline > a:visited,
+.underline > a:hover,
+.underline > a:active {
+    text-decoration: underline;
+}
+
+.btn,
+button {
+    display: inline-block;
+    .border (25px);
+    .theblue;
+    text-align: center;
+    color: @white;
+}
+
+.large-btn {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.mid-btn {
+    font-size: 1.1em;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+//**************************************************************
+// body blocks
 .educational-block {
     width: 960px;
     margin: 10px auto;
 }
 
+//**************************************************************
+// top banners
 .banner {
     width: 960px;
     height: 343px;
@@ -45,20 +178,6 @@ body {
     color: #00BBF2;
 }
 
-h1 {
-    font-family: "Pathway Gothic One", sans-serif;
-    font-size: 42px;
-    font-weight: normal;
-    margin: 10px 0 0 0;
-}
-
-h3 {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 20px;
-    font-weight: lighter;
-    margin: 15px 0;;
-}
-
 .title > h3 {
     margin-left: 25px;
 }
@@ -71,3 +190,249 @@ h3 {
     background: url(../logo/t_logo_75px.gif) no-repeat center center;
 }
 
+
+
+//**************************************************************
+// nav bar & footer
+
+.nav-bar {
+    margin: 10px 0 0;
+    width: 100%;
+    .heavy-box;
+    .theblue;
+}
+
+.footer-wrap {
+    background: @white;
+}
+
+.footer {
+    margin-top: 25px;
+}
+
+.footer > ul,
+.nav-bar > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar > ul > li {
+    display: inline-block;
+    margin: 0;
+    padding: 4px 0;
+    font-size: 1.4em;
+    line-height: 1.6em;
+    font-weight: 600;
+}
+
+.footer > ul > li {
+    display: inline-block;
+    margin: 0 15px;
+    padding: 4px  0;
+    font-size: 1em;
+}
+
+.nav-bar a {
+    color: @white;
+    margin: 0 18px;
+    text-decoration: none;
+}
+
+//**************************************************************
+// boxes and colors
+
+.box {
+    .heavy-box;
+    background: @white;
+    padding: 15px 0 20px;
+    margin: 15px 0 0;
+    position: relative;
+}
+
+.large-btn {
+    margin: 15px 0 0;
+}
+
+.box > .callout, .box > p, .box > h4, .box > h3, .box > h2 {
+    padding: 1px 20px;
+}
+
+.box > .callout {
+    background: @banner-blue;
+}
+
+.blue-box {
+    color: @white;
+    font-weight: lighter;
+    .reverse-sky;
+}
+
+.blue-text {
+    color: @darker-blue;
+}
+
+.tan {
+    background-color: @tan;
+}
+
+.yelling {
+    text-transform: uppercase;
+}
+
+.yelling > a,
+.yelling > p {
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    line-height: 1.4em;
+    margin: 0;
+}
+
+.speech {
+    padding: 0 15px;
+    margin: 0;
+}
+
+.center-text {
+    text-align: center;
+}
+
+
+
+
+
+//**************************************************************
+// index
+
+.questions {
+    height: 110px;
+    padding: 0;
+}
+.social-row > a {
+    display: inline-block;
+    margin: 70px 5px 0;
+}
+
+.teacher-small {
+    background: url("../img/teacher_small_62x80.png") no-repeat center center;
+    width: 62px;
+    height: 80px;
+    overflow: visible;
+}
+
+.fake-right {
+    margin: 0;
+    position: absolute;
+    left: 68%;
+    top: 0.7em;
+}
+
+.bottom-right {
+    background: @banner-blue;
+    position: absolute;
+    height: 1.4em;
+    bottom: 0;
+    right: 0;
+    padding: 0 30px;
+
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    border-left-top-radius: 10px;
+}
+
+.mission > img {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+}
+
+.mission > p {
+    margin-right: 300px;
+    line-height: 1.3em;
+}
+
+.award {
+    height: 250px;
+    overflow: hidden;
+}
+
+.award > img {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.award > p {
+    margin-left: 200px;
+    line-height: 1.3em;
+    text-align: center;
+}
+
+.award > .black {
+    color: @black;
+    font-size: 1.3em;
+    line-height: 1.6em;
+    font-family: Arial, sans-serif;
+}
+
+.award > p {
+    font-weight: 900;
+}
+
+.testimonial > img {
+    margin-bottom: 25px;
+}
+
+.testimonial > .speech {
+    position: absolute;
+    bottom: 0;
+    opacity: 0.9;
+}
+
+.test {
+    padding-bottom: 274px;
+}
+
+.test > img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.test > p {
+    font-size: 1.2em;
+    line-height: 1.3em;
+    font-weight: bold;
+}
+
+//**************************************************************
+// input elements
+
+.reg-form {
+    width: 80%;
+    margin: 15px auto;
+}
+
+input[type="text"],
+input[type="checkbox"],
+textarea,
+input[type="radio"] {
+    .halo;
+    line-height: 2em;
+    margin: 1em 0 2em;
+    padding: 0 4px;
+}
+
+.reg-form input[type="text"]
+{
+    width: 45%;
+    display: block;
+}
+
+label {
+    margin-right: 7px;
+}
+
+.big-input {
+
+}
