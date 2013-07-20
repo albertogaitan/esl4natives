@@ -45,7 +45,7 @@
                     <span class="teacher-small fake-right"></span>
                     <p>Ask me now.</p>
                     <p>I'll answer soon.</p>
-                    <a class="bottom-right">Send</a>
+                    <a href="/contact.html" class="bottom-right">Send</a>
                 </div>
 
                 <a href="/register.html" class="yelling btn large-btn">Register Now</a>
@@ -81,9 +81,28 @@
             </div><!-- end left -->
 
             <div class="center span9">
-                <div class="box blue-text">
-                    <h3>Coming soon!</h3>
-                </div>
+
+                <div class="box blue-text registration">
+
+                    <div class="reg-form">
+                        <form id="registration">
+
+                            <input id="family" name="name" type="text" placeholder="Name (first and last)">
+                            <input id="email" type="text" placeholder="E-Mail">
+
+                            Questions or suggestions?
+                            <br />
+                            <textarea rows="10" cols="50"></textarea>
+
+                            <br />
+                            <button id="registration_submit" type="submit" class="yelling large-btn">Submit</button>
+                        </form><!-- end registration -->
+
+                        <script type="text/javascript" src="js/contact-submit.js"></script>
+
+                    </div><!-- end reg-form -->
+
+                </div><!-- end registration -->
 
             </div><!-- end center span9 -->
         </div><!-- end main content -->

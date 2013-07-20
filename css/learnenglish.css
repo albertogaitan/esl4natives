@@ -516,3 +516,23 @@ label {
   bottom: -20px;
   left: 36px;
 }
+.testimonial {
+  position: relative;
+  padding: 40px 20px;
+}
+.testimonial > div,
+.testimonial > p,
+.testimonial > span {
+  vertical-align: middle;
+  display: inline-block;
+}
+.testimonial > p,
+.testimonial > .content {
+  width: 60%;
+}
+.testimonial > div {
+  width: 25%;
+}
+.testimonial > .aligner {
+  width: 0;
+}

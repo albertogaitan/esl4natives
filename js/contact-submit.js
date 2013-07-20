@@ -35,12 +35,11 @@
             "message": {
                 "html":html,
                 "text":text,
-                "subject":"New class sign-up",
+                "subject":"New question or suggestion",
                 "from_email":"message@eslfornativespeakers.com",
                 "from_name":"ESL",
                 "to":[{
-                    "email":"slipmyknot@gmail.com",
-                    //"email":"transformerinstitute@gmail.com",
+                    "email":"transformerinstitute@gmail.com",
                     "name":"ESL INFO"
                 }]
             },
