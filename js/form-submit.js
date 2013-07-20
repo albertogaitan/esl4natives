@@ -39,7 +39,7 @@
                 "from_email":"message@eslfornativespeakers.com",
                 "from_name":"ESL",
                 "to":[{
-                    "email":"transformerinstitute@gmail.com>",
+                    "email":"transformerinstitute@gmail.com",
                     "name":"ESL INFO"
                 }]
             },
