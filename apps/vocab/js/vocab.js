@@ -16,6 +16,12 @@ var newWordInPlay, currentWordInPlay;
 var untouched = true;
 
 function init() {
+  VOCAB_EXT.forEach(function(f){
+    document.getElementById(f).onclick = function(e){
+      evaluate(this.id);
+    }
+  });
+
   try {
     // Fix up for prefixing; Webkit browsers only, as of this writing
     // and only Safari Mobile among the mobile browsers
