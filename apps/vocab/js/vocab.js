@@ -32,11 +32,11 @@ function touchStart() {
     if (untouched) {
         window.addEventListener('touchstart', function() {
             // create empty buffer
-            var buffer = myContext.createBuffer(1, 1, 22050);
-            var theSource = myContext.createBufferSource();
+            var buffer = myAudioContext.createBuffer(1, 1, 22050);
+            var theSource = myAudioContext.createBufferSource();
             theSource.buffer = buffer;
             // connect to the output
-            theSource.connect(myContext.destination);
+            theSource.connect(myAudioContext.destination);
             // play the silent file
             theSource.noteOn(0);
         }, false);
@@ -143,7 +143,7 @@ function pauseSound() {
 }
 
 function evaluate(id) {
-    console.log("the id %o", id);
+    alert("BL: " + id);
     if (words_done.length > 0) {
         if (QandA[currentWordInPlay] == id){
             playSound("z_correct");
