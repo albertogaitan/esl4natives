@@ -270,6 +270,10 @@ button {
     background: @banner-blue;
 }
 
+.no-box {
+    margin: 15px 0 0;
+}
+
 .blue-box {
     color: @white;
     font-weight: lighter;
@@ -473,27 +477,43 @@ label {
 //**************************************************************
 // testimonials page
 
-.testimonial {
+.testimonial-page {
     position: relative;
     padding: 40px 20px;
 }
 
-.testimonial > div,
-.testimonial > p,
-.testimonial > span {
+.testimonial-page > div,
+.testimonial-page > p,
+.testimonial-page > span {
     vertical-align: middle;
     display: inline-block;
 }
 
-.testimonial > p,
-.testimonial > .content {
+.testimonial-page > p,
+.testimonial-page > .content {
     width: 60%;
 }
 
-.testimonial > div {
+.testimonial-page > div {
     width: 25%;
 }
 
-.testimonial > .aligner {
+.testimonial-page > .aligner {
     width: 0;
+}
+
+
+
+
+//**************************************************************
+// life in DC page
+
+.directions {
+    padding-bottom: 110px;
+}
+
+.directions > img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
