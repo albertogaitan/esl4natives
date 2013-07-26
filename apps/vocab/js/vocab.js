@@ -13,7 +13,8 @@ var words_done = [];
 var QandA = {};
 var newWordInPlay, currentWordInPlay;
 // has the audio been activated by a touch event already?
-var untouched = true;
+
+var sound_is_initialized = false;
 
 function init() {
   VOCAB_EXT.forEach(function(f){
@@ -21,6 +22,24 @@ function init() {
       evaluate(this.id);
     }
   });
+  document.getElementById("next").onclick = function(e){
+    setupNextWord(selectRandomVocabWord());
+  }
+
+ // $('.container-fluid').bind('touchstart', function(e){
+  window.addEventListener('touchstart', function() {
+    if(!sound_is_initialized) {
+            // create empty buffer
+            var buffer = myAudioContext.createBuffer(1, 1, 22050);
+            var theSource = myAudioContext.createBufferSource();
+            theSource.buffer = buffer;
+            // connect to the output
+            theSource.connect(myAudioContext.destination);
+            // play the silent file
+            theSource.noteOn(0);
+      sound_is_initialized = true;
+    }
+  }, false);
 
   try {
     // Fix up for prefixing; Webkit browsers only, as of this writing
@@ -32,22 +51,6 @@ function init() {
   } catch(e) {
     alert('Sorry, the Web Audio API is not supported in this browser.');
   }
-}
-
-function touchStart() {
-    if (untouched) {
-        window.addEventListener('touchstart', function() {
-            // create empty buffer
-            var buffer = myAudioContext.createBuffer(1, 1, 22050);
-            var theSource = myAudioContext.createBufferSource();
-            theSource.buffer = buffer;
-            // connect to the output
-            theSource.connect(myAudioContext.destination);
-            // play the silent file
-            theSource.noteOn(0);
-        }, false);
-        untouched = false;
-    }
 }
 
 // Stached here for safekeeping. Reportedly not needed under iOS 6.
@@ -135,9 +138,10 @@ function setupNextWord(currentWordInPlay) {
 
     // place images
     for (var i = 0, images = 4; i < images; i++){
-        $("img#" + VOCAB_EXT).attr("src", BASEPATH + IMGPATH + currentWordInPlay + "_" + VOCAB_EXT[i] + ".jpg");
+      var el = $("#"+VOCAB_EXT[i]+" img");
+      $(el).attr("src", BASEPATH + IMGPATH + currentWordInPlay + "_" + VOCAB_EXT[i] + ".jpg");
     }
-    playSound(currentSource);
+    playSound(currentWordInPlay);
 }
 
 function pauseSound() {
