@@ -21,11 +21,11 @@ function init() {
       // Fix up for prefixing; As of this writing Webkit browsers only
       // and only Safari Mobile on iOS 6+ among the mobile browsers
       window.AudioContext = window.AudioContext||window.webkitAudioContext;
-      myAudioContext = new webkitAudioContext();
+      myAudioContext = new AudioContext();
       words_done = VOCAB;
       fetchSounds(VOCAB, APPPATH + AUDIOPATH);
     } catch(e) {
-      alert('Sorry, this browser does not support the Web Audio API.');
+      alert('Sorry, this browser does not support the Web Audio API so you will not hear the vocabulary words. You may, however still take the test!');
     }
     VOCAB_EXT.forEach(function(f) {
       document.getElementById(f).onclick = function(e) {
@@ -34,7 +34,11 @@ function init() {
         return false;
       };
     });
+    // Next button used to greenlight media downloads on iOS devices
+    // which need a user-initiated UI event to play at least the
+    // first one of a session
     document.getElementById("next").onclick = function(e) {
+    // Initialize gameplay environment and setup first word
         if(!sound_is_initialized) {
             // create empty buffer
             var buffer = myAudioContext.createBuffer(1, 1, 22050);
@@ -48,14 +52,14 @@ function init() {
             // via JS without waiting for user interaction
             sound_is_initialized = true;
         }
-        // select first word and put it in play
         setupNextWord(selectRandomVocabWord());
+        // we're done with the Next button
         document.getElementById("next").style.display = 'none';
     };
 }
 
 // Stashed here for safekeeping. Reportedly not needed under iOS 6.
-function safariFullScreenHack() {
+function safariFullscreenHack() {
     window.addEventListener("load",function() {
         setTimeout(function() {
             window.scrollTo(0, 0);
@@ -139,6 +143,7 @@ function playSound(stringToken) {
     // source.buffer = selectRandomVocabWord();
     // console.log("stringToken %o", stringToken);
     source.buffer = myBuffers[stringToken];
+    source.connect(myAudioContext.destination);
     // play right now (0 seconds from now)
     // can also pass myAudioContext.currentTime
     // noteOn() has reportedly been deprecated but Safari requires it
