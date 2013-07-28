@@ -1,34 +1,49 @@
-const AUDIOPATH = 'audio/', 
+const AUDIOPATH = 'audio/',
       IMGPATH = 'img/',
-      BASEPATH = 'apps/vocab/',
-      VOCAB = ['achievement', 'active', 'advice', 'ambition', 'busy', 'community', 'culture', 'decide', 'doubt', 'family', 'fear', 'freetime', 'friendly', 'happiness', 'healthy', 'hope', 'play', 'regretful', 'respect', 'responsibility', 'routine', 'study', 'successful', 'vacation', 'work', 'worthit'],
+      APPPATH = 'apps/vocab/',
+      VOCAB = ['achievement', 'active', 'advice', 'ambition', 'busy', 'community', 'culture', 'family', 'freetime', 'friendly', 'happiness', 'healthy', 'hope', 'play', 'regretful', 'respect', 'responsibility', 'routine', 'successful', 'to-be-worth-it', 'to-decide', 'to-doubt', 'to-fear', 'to-study', 'to-work', 'vacation'],
       VOCAB_EXT = ['TL', 'TR', 'BL', 'BR'],
-      VOCAB_ANSWER = ['BR', 'TL', 'TR', 'TL', 'TL', 'BL', 'BL', 'BR', 'BL', 'BR', 'TL', 'TL', 'BL', 'BL', 'BL', 'TR', 'TL', 'TR', 'BL', 'BR', 'BL', 'TL', 'BR', 'TL', 'TR', 'BL'],
+      VOCAB_ANSWER = ['BR', 'TL', 'TR', 'TL', 'TL', 'BL', 'BL', 'BR', 'TL', 'BL', 'BL', 'BL', 'TR', 'TL', 'TR', 'BL', 'BR', 'BL', 'BR', 'BL', 'BR', 'BL', 'TL', 'TL', 'TR', 'TL'],
       OUTCOME = ['z_correct', 'z_incorrect'];
 
 var myAudioContext, myBuffers = {}, mySource, myNodes = {}, score = 0;
 
 // keep track of this session's completed vocabulary challenges
 var words_done = [];
-var QandA = {};
-var newWordInPlay, currentWordInPlay;
+var answerId = {};
+var currentWordInPlay = "";
 // has the audio been activated by a touch event already?
 
 var sound_is_initialized = false;
 
 function init() {
-  VOCAB_EXT.forEach(function(f){
-    document.getElementById(f).onclick = function(e){
-      evaluate(this.id);
+    try {
+      // Fix up for prefixing; As of this writing Webkit browsers only
+      // and only Safari Mobile on iOS 6+ among the mobile browsers
+      window.AudioContext = window.AudioContext||window.webkitAudioContext;
+      myAudioContext = new webkitAudioContext();
+      words_done = VOCAB;
+      fetchSounds(VOCAB, APPPATH + AUDIOPATH);
+    } catch(e) {
+      alert('Sorry, this browser does not support the Web Audio API.');
     }
-  });
-  document.getElementById("next").onclick = function(e){
-    setupNextWord(selectRandomVocabWord());
-  }
+    VOCAB_EXT.forEach(function(f) {
+      document.getElementById(f).onclick = function(e) {
+        evaluate(this.id);
+        // TODO: is this next line necessary since the elements being bound are hyperlink anchors?
+        return false;
+      };
+    });
+    document.getElementById("next").onclick = function(e) {
+      setupNextWord(selectRandomVocabWord());
+    };
+    // select first word and put it in play
+    var initialWord = selectRandomVocabWord();
+    // setupNextWord(initialWord);
 
- // $('.container-fluid').bind('touchstart', function(e){
-  window.addEventListener('touchstart', function() {
-    if(!sound_is_initialized) {
+    // $('.container-fluid').bind('touchstart', function(e) {
+    window.addEventListener('touchstart', function(e) {
+        if(!sound_is_initialized) {
             // create empty buffer
             var buffer = myAudioContext.createBuffer(1, 1, 22050);
             var theSource = myAudioContext.createBufferSource();
@@ -37,23 +52,14 @@ function init() {
             theSource.connect(myAudioContext.destination);
             // play the silent file
             theSource.noteOn(0);
-      sound_is_initialized = true;
-    }
-  }, false);
-
-  try {
-    // Fix up for prefixing; Webkit browsers only, as of this writing
-    // and only Safari Mobile among the mobile browsers
-    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-    myAudioContext = new webkitAudioContext();
-    fetchSounds(VOCAB, BASEPATH + AUDIOPATH);
-    words_done = VOCAB;
-  } catch(e) {
-    alert('Sorry, the Web Audio API is not supported in this browser.');
-  }
+            // Now iOS devices will download, buffer and play back sounds 
+            // via JS without waiting for user interaction
+            sound_is_initialized = true;
+        }
+    }, false);
 }
 
-// Stached here for safekeeping. Reportedly not needed under iOS 6.
+// Stashed here for safekeeping. Reportedly not needed under iOS 6.
 function safariFullScreenHack() {
     window.addEventListener("load",function() {
         setTimeout(function() {
@@ -67,7 +73,8 @@ function fetchSounds(appfiles, audio_path) {
     for (var i = 0, len = appfiles.length; i < len; i++) {
 
         // Let's load the test Q&A while we're iterating
-        QandA[appfiles[i]] = VOCAB_ANSWER[i];
+        answerId[appfiles[i]] = VOCAB_ANSWER[i];
+
         // Then we rejoin our regularly scheduled program
         request = new XMLHttpRequest();
         request._soundName = appfiles[i];
@@ -128,6 +135,11 @@ function playSound(stringToken) {
     source.noteOn(0);
 }
 
+function buildPresentedWord(wordAsFilename) {
+    var presentedWord = wordAsFilename.replace(/-/g, " ");
+    return presentedWord;
+}
+
 function setupNextWord(currentWordInPlay) {
     // create a new AudioBufferSourceNode
     var currentSource = myAudioContext.createBufferSource();
@@ -139,8 +151,10 @@ function setupNextWord(currentWordInPlay) {
     // place images
     for (var i = 0, images = 4; i < images; i++){
       var el = $("#"+VOCAB_EXT[i]+" img");
-      $(el).attr("src", BASEPATH + IMGPATH + currentWordInPlay + "_" + VOCAB_EXT[i] + ".jpg");
+      $(el).attr("src", APPPATH + IMGPATH + currentWordInPlay + "_" + VOCAB_EXT[i] + ".jpg");
     }
+    // place word text
+    $('h1.vocab-word').contents().replaceWith(buildPresentedWord(currentWordInPlay));
     playSound(currentWordInPlay);
 }
 
@@ -153,18 +167,22 @@ function pauseSound() {
 }
 
 function evaluate(id) {
-    alert("BL: " + id);
+    // alert("id of clicked anchor: " + id);
     if (words_done.length > 0) {
-        if (QandA[currentWordInPlay] == id){
+        if (answerId[currentWordInPlay] == id){
+            score++;
             playSound("z_correct");
         } else {
             playSound("z_incorrect");
         }
-            // display next word and images
-            setupNextWord(selectRandomVocabWord());
+        // display next word and images...
+        setupNextWord(selectRandomVocabWord());
+        // say next word
+
     } else {
         // display score
-        alert("Your score was" + score + "!");
+        alert("Your score was " + score + "!");
         // return to index page
+        window.location.href = "http://www.eslfornativespeakers.com/index.html";
     }
 }
