@@ -35,14 +35,6 @@ function init() {
       };
     });
     document.getElementById("next").onclick = function(e) {
-      setupNextWord(selectRandomVocabWord());
-    };
-    // select first word and put it in play
-    var initialWord = selectRandomVocabWord();
-    // setupNextWord(initialWord);
-
-    // $('.container-fluid').bind('touchstart', function(e) {
-    window.addEventListener('touchstart', function(e) {
         if(!sound_is_initialized) {
             // create empty buffer
             var buffer = myAudioContext.createBuffer(1, 1, 22050);
@@ -56,7 +48,10 @@ function init() {
             // via JS without waiting for user interaction
             sound_is_initialized = true;
         }
-    }, false);
+        // select first word and put it in play
+        setupNextWord(selectRandomVocabWord());
+        document.getElementById("next").style.display = 'none';
+    };
 }
 
 // Stashed here for safekeeping. Reportedly not needed under iOS 6.
@@ -67,6 +62,23 @@ function safariFullScreenHack() {
         }, 0);
     });
 }
+
+// function greenLightMediaDownloads() {
+//     // $('.container-fluid').bind('touchstart', function(e) {
+//     window.addEventListener('touchstart', function(e) {
+//         // create empty buffer
+//         var buffer = myAudioContext.createBuffer(1, 1, 22050);
+//         var theSource = myAudioContext.createBufferSource();
+//         theSource.buffer = buffer;
+//         // connect to the output
+//         theSource.connect(myAudioContext.destination);
+//         // play the silent file
+//         theSource.noteOn(0);
+//         // Now iOS devices will download, buffer and play back sounds 
+//         // via JS without waiting for user interaction
+//         sound_is_initialized = true;
+//     }, false);
+// }
 
 function fetchSounds(appfiles, audio_path) {
     var request = new XMLHttpRequest();
