@@ -1,0 +1,26 @@
+/* vacab.css */
+/*
+The default Grid System in Twitter Bootstrap is 940px wide 
+and 12 column. It has four responsive variations for phone, 
+tablet portrait, table landscape and small desktops, and 
+large wide screen desktops.
+*/
+
+.vocab-word {
+	font-size: 7.3em;
+	color: #ffffff;
+	text-shadow: 3px 2px 10px #000000;
+	position: absolute;
+	z-index: 50;
+	margin-left: 1%;
+	margin-top: 25%;
+}
+
+img {
+	margin: 3px;
+	max-width: 100%;
+}
+
+img:hover {
+	border: 3px solid magenta;
+}
