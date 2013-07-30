@@ -4,7 +4,7 @@ const AUDIOPATH = 'audio/',
       VOCAB = ['achievement', 'active', 'advice', 'ambition', 'busy', 'community', 'culture', 'family', 'freetime', 'friendly', 'happiness', 'healthy', 'hope', 'play', 'regretful', 'respect', 'responsibility', 'routine', 'successful', 'to-be-worth-it', 'to-decide', 'to-doubt', 'to-fear', 'to-study', 'to-work', 'vacation'],
       VOCAB_EXT = ['TL', 'TR', 'BL', 'BR'],
       VOCAB_ANSWER = ['BR', 'TL', 'TR', 'TL', 'TL', 'BL', 'BL', 'BR', 'TL', 'BL', 'BL', 'BL', 'TR', 'TL', 'TR', 'BL', 'BR', 'BL', 'BR', 'BL', 'BR', 'BL', 'TL', 'TL', 'TR', 'TL'],
-      OUTCOME = ['z_correct', 'z_incorrect'];
+      OUTCOME = ['z_correct', 'z_incorrect', 'z_score'];
 
 var myAudioContext, myBuffers = {}, mySource, myNodes = {}, score = 0;
 
@@ -186,21 +186,21 @@ function pauseSound() {
 }
 
 function evaluate(id) {
+    if (answerId[currentWordInPlay] == id){
+        score++;
+        playSound("z_correct");
+    } else {
+        playSound("z_incorrect");
+    }
     if (words_done.length > 0) {
-        if (answerId[currentWordInPlay] == id){
-            score++;
-            playSound("z_correct");
-        } else {
-            playSound("z_incorrect");
-        }
         // TODO hide the word here? or in setUpNextWord?
         $('.vocab-word').hide();
         // display next word and images and say next word
         setTimeout(function(){setupNextWord(selectRandomVocabWord());}, 1000);
     } else {
         // display score
-        alert("Your score was " + score + "!");
+        setTimeout(function(){playSound("z_score"); alert("Your score was " + score + "!");}, 1250);
         // return to index page
-        window.location.href = "http://www.eslfornativespeakers.com/index.html";
+        setTimeout(function(){window.location.href = "http://www.eslfornativespeakers.com/game.html";}, 2250);
     }
 }
