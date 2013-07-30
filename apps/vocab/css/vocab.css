@@ -20,16 +20,16 @@ large wide screen desktops.
 .quad {
 	margin-left: 10px;
 	max-width: 100%;
-	max-height: 50%;
+	max-height: 48%;
 }
 
 img:hover {
-	border: 3px solid magenta;
+	border: 3px solid white;
 }
 
 .begin {
 	position: absolute;
+	width: 90%;
 	text-align: center;
 	z-index: 60;
-	margin-top: 48%;
 }
