@@ -1,4 +1,4 @@
-.games h3 {
+.games {
   text-align: center;
 }
 .fullscreen {
@@ -8,4 +8,7 @@
 .rpg > button {
   float: none;
   display: block;
+}
+.rpg > img {
+  text-align: center;
 }
