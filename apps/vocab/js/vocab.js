@@ -25,16 +25,16 @@ function init() {
       words_done = VOCAB;
       fetchSounds(VOCAB, APPPATH + AUDIOPATH);
     } catch(e) {
-      alert('Sorry, this browser does not support the Web Audio API so you will not hear the vocabulary words. You may, however still take the test!');
+      // alert('Sorry, this browser does not support the Web Audio API so you will not hear the vocabulary words. You may, however still take the test!');
+      alert('Sorry, this browser does not support the Web Audio API.');
     }
     VOCAB_EXT.forEach(function(f) {
       document.getElementById(f).onclick = function(e) {
         evaluate(this.id);
-        // TODO: is this next line necessary since the elements being bound are hyperlink anchors?
         return false;
       };
     });
-    // Next button used to greenlight media downloads on iOS devices
+    // Next button used to greenlight media playback downloads on iOS devices
     // which need a user-initiated UI event to play at least the
     // first one of a session
     document.getElementById("next").onclick = function(e) {
@@ -85,12 +85,10 @@ function safariFullscreenHack() {
 // }
 
 function fetchSounds(appfiles, audio_path) {
-    var request = new XMLHttpRequest();
+    var request;
     for (var i = 0, len = appfiles.length; i < len; i++) {
-
         // Let's load the test Q&A while we're iterating
         answerId[appfiles[i]] = VOCAB_ANSWER[i];
-
         // Then we rejoin our regularly scheduled program
         request = new XMLHttpRequest();
         request._soundName = appfiles[i];
@@ -99,13 +97,14 @@ function fetchSounds(appfiles, audio_path) {
         request.addEventListener('load', bufferSound, false);
         request.send();
     }
+    // fetch the response success notifier sounds
     for (var j = 0, err = OUTCOME.length; j < err; j++) {
-        request2 = new XMLHttpRequest();
-        request2._soundName = OUTCOME[j];
-        request2.open('GET', audio_path + request._soundName + '.m4a', true);
-        request2.responseType = 'arraybuffer';
-        request2.addEventListener('load', bufferSound, false);
-        request2.send();
+        request = new XMLHttpRequest();
+        request._soundName = OUTCOME[j];
+        request.open('GET', audio_path + request._soundName + '.m4a', true);
+        request.responseType = 'arraybuffer';
+        request.addEventListener('load', bufferSound, false);
+        request.send();
     }
 }
 
@@ -159,11 +158,10 @@ function buildPresentedWord(wordAsFilename) {
 
 function setupNextWord(currentWordInPlay) {
     // create a new AudioBufferSourceNode
-    var currentSource = myAudioContext.createBufferSource();
-    currentSource.buffer = myBuffers[currentWordInPlay];
-    currentSource.loop = false;
-    currentSource = routeSound(currentSource);
-    // mySource = currentSource;
+    // var currentSource = myAudioContext.createBufferSource();
+    // currentSource.buffer = myBuffers[currentWordInPlay];
+    // currentSource.loop = false;
+    // currentSource = routeSound(currentSource);
 
     // place images
     for (var i = 0, images = 4; i < images; i++){
@@ -171,8 +169,12 @@ function setupNextWord(currentWordInPlay) {
       $(el).attr("src", APPPATH + IMGPATH + currentWordInPlay + "_" + VOCAB_EXT[i] + ".jpg");
     }
     // place word text
-    $('h1.vocab-word').contents().replaceWith(buildPresentedWord(currentWordInPlay));
-    playSound(currentWordInPlay);
+    setTimeout(function(){
+        $('h1.vocab-word').contents().replaceWith(buildPresentedWord(currentWordInPlay));
+        $('.vocab-word').show();
+    }, 1000);
+    // say the word
+    setTimeout(function(){playSound(currentWordInPlay);}, 1000);
 }
 
 function pauseSound() {
@@ -184,7 +186,6 @@ function pauseSound() {
 }
 
 function evaluate(id) {
-    // alert("id of clicked anchor: " + id);
     if (words_done.length > 0) {
         if (answerId[currentWordInPlay] == id){
             score++;
@@ -192,10 +193,10 @@ function evaluate(id) {
         } else {
             playSound("z_incorrect");
         }
-        // display next word and images...
-        setupNextWord(selectRandomVocabWord());
-        // say next word
-
+        // TODO hide the word here? or in setUpNextWord?
+        $('.vocab-word').hide();
+        // display next word and images and say next word
+        setTimeout(function(){setupNextWord(selectRandomVocabWord());}, 1000);
     } else {
         // display score
         alert("Your score was " + score + "!");

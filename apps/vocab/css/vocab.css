@@ -10,8 +10,8 @@ large wide screen desktops.
 	text-transform: capitalize;
 	text-align: center;
 	font-size: 7.3em;
-	color: #ffffff;
-	text-shadow: 3px 2px 10px #000000;
+	color: #333333;
+	text-shadow: 3px 2px 10px #ffffff;
 	position: absolute;
 	z-index: 50;
 	margin-top: 33%;
