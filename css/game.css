@@ -1,0 +1,11 @@
+.games h3 {
+  text-align: center;
+}
+.fullscreen {
+  width: 95%;
+  margin: 20px 2%;
+}
+.rpg > button {
+  float: none;
+  display: block;
+}
