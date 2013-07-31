@@ -12,8 +12,8 @@ var myAudioContext, myBuffers = {}, mySource, myNodes = {}, score = 0;
 var words_done = [];
 var answerId = {};
 var currentWordInPlay = "";
-// has the audio been activated by a touch event already?
 
+// has the audio been activated by a touch event already?
 var sound_is_initialized = false;
 
 function init() {
