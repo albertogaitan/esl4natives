@@ -186,14 +186,25 @@ function pauseSound() {
 }
 
 function evaluate(id) {
+    var wrongAnswers = VOCAB_EXT;
+    // wrongAnswers.splice(VOCAB_EXT.indexOf(answerId[currentWordInPlay]), 1);
     if (answerId[currentWordInPlay] == id){
         score++;
         playSound("z_correct");
     } else {
         playSound("z_incorrect");
+        for (var i = wrongAnswers.length - 1; i >= 0; i--) {
+            if (wrongAnswers[i] != answerId[currentWordInPlay]) { 
+                $("#" + wrongAnswers[i]).css({ opacity: 0.1 });
+            }
+        }
+        setTimeout(function(){
+            for (var i = VOCAB_EXT.length - 1; i >= 0; i--) {
+                $("#" + wrongAnswers[i]).css({ opacity: 1.0 });
+            }
+        }, 1000);
     }
     if (words_done.length > 0) {
-        // TODO hide the word here? or in setUpNextWord?
         $('.vocab-word').hide();
         // display next word and images and say next word
         setTimeout(function(){setupNextWord(selectRandomVocabWord());}, 1000);
