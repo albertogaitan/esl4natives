@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="thesky">
 <head>
-    <title>ESL for Native Speakers - a Transformer Gallery Project</title>
+    <!-- Apple-Specific Meta Tag Keys -->
+    <!-- https://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialogues In Context &mdash; ESL for Native Speakers &ndash; Transformer Language Labs</title>
     <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
-    <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="css/learnenglish.css" />
     <link type="text/css" rel="stylesheet" href="css/game.css" />
+    <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
 </head>
-
 <body>
-    <div class="fullscreen rpg">
+    <div class="container fullscreen rpg">
         <div class="row">
-            <div class="span2">
-                <p>Get started by clicking on a level below</p>
-
-                <button>Beginner</button>
-                <button>High beginner</button>
-                <button>Intermediate</button>
-                <button>High intermediate</button>
-                <button>Advanced</button>
-                <button>High advanced</button>
-                <button>Proficient</button>
+            <div class="span12">
+                <button class="large-btn begin">Instructions</button>
             </div>
-            <div class="span10">
+        </div>
+        <div class="row proficiency">
+            <div class="span10 offset1">
+                <!-- introductions -->
+                <button id="beginner">Beginner</button>
+                <!-- recreation -->
+                <button id="high-beginner">High beginner</button>
+                <!-- exam -->
+                <button id="intermediate">Intermediate</button>
+                <!-- fired -->
+                <button id="high-intermediate">High intermediate</button>
+                <!-- shopping -->
+                <button id="advanced">Advanced</button>
+                <!-- interview -->
+                <button id="high-advanced">High advanced</button>
+                <!-- doctor -->
+                <button id="proficient">Proficient</button>
+            </div>
+            <div class="span10 id="dialogue">
                 <!-- game goes here -->
             </div>
-
+        </div>
     </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="apps/vocab/js/vocab.js"></script>
 </body>
+</html>

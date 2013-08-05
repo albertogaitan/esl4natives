@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="thesky">
+<head>
+    <!-- Apple-Specific Meta Tag Keys -->
+    <!-- https://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style"
+  content="black-translucent" />
+    <!-- end Apple-Specific Meta Tag Keys -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dialogues In Context &mdash; ESL for Native Speakers &ndash; Transformer Language Labs</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/learnenglish.css" />
+    <link type="text/css" rel="stylesheet" href="css/game.css" />
+    <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+</head>
+<body onload="init()">
+    <div id="ui" class="container fullscreen rpg">
+        <div class="row instructions">
+            <div class="span12">
+                <button class="large-btn begin">Instructions</button>
+            </div>
+        </div>
+        <div class="row proficiency">
+            <div class="span10 offset1">
+                <!-- introductions -->
+                <button data-proficiency="beginner" data-dialogue="introductions">Beginner</button>
+                <!-- recreation -->
+                <button data-proficiency="high-beginner" data-dialogue="recreation">High beginner</button>
+                <!-- exam -->
+                <button data-proficiency="intermediate" data-dialogue="exam">Intermediate</button>
+                <!-- fired -->
+                <button data-proficiency="high-intermediate" data-dialogue="fired">High intermediate</button>
+                <!-- shopping -->
+                <button data-proficiency="advanced" data-dialogue="shopping">Advanced</button>
+                <!-- interview -->
+                <button data-proficiency="high-advanced" data-dialogue="interview">High advanced</button>
+                <!-- doctor -->
+                <button data-proficiency="proficient" data-dialogue="doctor">Proficient</button>
+            </div>
+            <div class="span10 dialogue">
+                <!-- game goes here -->
+                <img src="apps/roleplay/img/1px.png" alt="placeholder image">
+                <!-- Countdown counter 
+                http://tutorialzine.com/2011/12/countdown-jquery/ 
+                -->
+                <div id="countdown" class="countdownHolder">
+                    <span class="countDiv countDiv2"></span>
+                    <span class="countSeconds">
+                        <span class="position">
+                            <span class="digit static"></span>
+                        </span>
+                        <span class="position">
+                            <span class="digit static"></span>
+                        </span>
+                    </span>
+                    <span class="countDiv countDiv3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="apps/roleplay/js/roleplay.js"></script>
+    <script type="text/javascript" src="apps/roleplay/js/lodash.roleplay.min.js"></script>
+</body>
+</html>
