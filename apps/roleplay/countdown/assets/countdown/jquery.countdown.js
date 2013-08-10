@@ -77,7 +77,7 @@
 		elem.addClass('countdownHolder');
 
 		// Creating the markup inside the container
-		$.each(['Days','Hours','Minutes','Seconds'],function(i){
+		$.each(['Minutes','Seconds'],function(i){
 			$('<span class="count'+this+'">').html(
 				'<span class="position">\
 					<span class="digit static">0</span>\
@@ -127,7 +127,7 @@
 			.removeClass('static')
 			.animate({top:'2.5em',opacity:0},'fast',function(){
 				digit.remove();
-			})
+			});
 
 		replacement
 			.delay(100)

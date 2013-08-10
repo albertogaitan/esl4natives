@@ -4,18 +4,19 @@
     <!-- Apple-Specific Meta Tag Keys -->
     <!-- https://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style"
-  content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- end Apple-Specific Meta Tag Keys -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dialogues In Context &mdash; ESL for Native Speakers &ndash; Transformer Language Labs</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="css/learnenglish.css" />
     <link type="text/css" rel="stylesheet" href="css/game.css" />
     <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apps/roleplay/countdown/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="apps/roleplay/countdown/assets/countdown/jquery.countdown.css">
 </head>
 <body onload="init()">
     <div id="ui" class="container fullscreen rpg">
@@ -41,29 +42,20 @@
                 <!-- doctor -->
                 <button data-proficiency="proficient" data-dialogue="doctor">Proficient</button>
             </div>
-            <div class="span10 dialogue">
+            <div class="span8 offset2 dialogue">
                 <!-- game goes here -->
-                <img src="apps/roleplay/img/1px.png" alt="placeholder image">
+                <img src="apps/roleplay/img/doctor_01.jpg" alt="placeholder image"/>
                 <!-- Countdown counter 
                 http://tutorialzine.com/2011/12/countdown-jquery/ 
                 -->
-                <div id="countdown" class="countdownHolder">
-                    <span class="countDiv countDiv2"></span>
-                    <span class="countSeconds">
-                        <span class="position">
-                            <span class="digit static"></span>
-                        </span>
-                        <span class="position">
-                            <span class="digit static"></span>
-                        </span>
-                    </span>
-                    <span class="countDiv countDiv3"></span>
-                </div>
+                <!-- <div id="countdown" class="countdownHolder"></div> -->
             </div>
         </div>
     </div>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="apps/roleplay/js/roleplay.js"></script>
     <script type="text/javascript" src="apps/roleplay/js/lodash.roleplay.min.js"></script>
+    <script type="text/javascript" src="apps/roleplay/countdown/assets/countdown/jquery.countdown.js"></script>
+    <script type="text/javascript" src="apps/roleplay/countdown/assets/js/script.js"></script>
 </body>
 </html>

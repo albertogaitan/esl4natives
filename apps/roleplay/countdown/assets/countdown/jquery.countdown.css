@@ -1,5 +1,5 @@
 .countdownHolder{
-	width:450px;
+	width:inherit;
 	margin:0 auto;
 	font: 40px/1.5 'Open Sans Condensed',sans-serif;
 	text-align:center;
@@ -48,9 +48,9 @@
  * of the countdown that you don't need.
  */
 
-.countDays{ /* display:none !important;*/ }
-.countDiv0{ /* display:none !important;*/ }
-.countHours{}
+.countDays{display:none !important;}
+.countDiv0{}
+.countHours{display:none !important;}
 .countDiv1{}
 .countMinutes{}
 .countDiv2{}
