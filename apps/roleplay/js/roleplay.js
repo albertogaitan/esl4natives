@@ -13,10 +13,10 @@ var AUDIOPATH = 'audio/',
     shopping = ['shopping_01', 3000, 'shopping_03', 4000, 'shopping_05', 3000, 'shopping_07', 4000, 'shopping_09', 3000, 'shopping_11', 2000, 'shopping_13', 1000, 'shopping_15', 1000, 'shopping'],
     AUX = ['instructions', 'z_final'], dialogueIds = {'proficient': doctor, 'intermediate': exam, 'high-intermediate': fired, 'high-advanced': interview, 'beginner': introductions, 'high-beginner': recreation, 'advanced': shopping};
 
-var myAudioContext, myBuffers = {}, mySource, myNodes = {};
+var context, myBuffers = {}, mySource, myNodes = {};
 
 // has the audio been activated by a touch event already?
-var permission_to_playback = false;
+var playback_unlocked = false;
 
 function init() {
     try {
@@ -25,17 +25,17 @@ function init() {
         // Fix up for prefixing; As of this writing Webkit browsers only
         // and only Safari Mobile on iOS 6+, among the mobile browsers
         window.AudioContext = window.AudioContext||window.webkitAudioContext;
-        myAudioContext = new AudioContext();
+        context = new AudioContext();
         fetchSounds(dialogueIds, APPPATH + AUDIOPATH);
     } catch(e) {
-        alert('Sorry, this browser does not support the necessary audio functions.');
+        alert('Sorry, this browser version does not support the necessary audio goodies :(');
     }
 
     $('button').click(function(){
         var $this = $(this),
         pr = $this.data('proficiency'),
         di = $this.data('dialogue');
-        playNextChoice(pr, window[di], dialogueIds);
+        playChosenLevel(pr, window[di], dialogueIds);
     });
 
     // setupNextDialogue(selectRandomVocabWord());
@@ -56,18 +56,18 @@ function safariFullscreenHack() {
 
 function getUiOkToPlayback() {
     // Allow media file playback
-    if(!permission_to_playback) {
+    if(!playback_unlocked) {
         $("#ui").click(function(){
             // create empty buffer
-            var buffer = myAudioContext.createBuffer(1, 1, 22050);
-            var theSource = myAudioContext.createBufferSource();
+            var buffer = context.createBuffer(1, 1, 22050);
+            var theSource = context.createBufferSource();
             theSource.buffer = buffer;
             // connect to the output
-            theSource.connect(myAudioContext.destination);
+            theSource.connect(context.destination);
             // play the silent file
             theSource.noteOn(0);
             // Now iOS devices will download, buffer and play back sounds via JS without waiting for user interaction
-            permission_to_playback = true;
+            playback_unlocked = true;
         }
     );}
 }
@@ -75,10 +75,10 @@ function getUiOkToPlayback() {
 function fetchSounds(appfiles, audio_path) {
     // requires lodash.js
     var request;
+    request = new XMLHttpRequest();
     _.forOwn(appfiles, function(proficiencyBaseFilenamesArrayObj, keyDialogueID){
         _.forOwn(proficiencyBaseFilenamesArrayObj, function(baseFileName, baseFilenamesArrayIndex){
             if (!_.isNumber(baseFileName)) {
-                request = new XMLHttpRequest();
                 request._soundName = baseFileName;
                 request.open('GET', audio_path + request._soundName + '.m4a', true);
                 request.responseType = 'arraybuffer';
@@ -89,7 +89,7 @@ function fetchSounds(appfiles, audio_path) {
     });
 
     for (s=0, len=AUX.length; s < len; s++) {
-        request = new XMLHttpRequest();
+        // request = new XMLHttpRequest();
         request._soundName = AUX[s];
         request.open('GET', audio_path + request._soundName + '.m4a', true);
         request.responseType = 'arraybuffer';
@@ -100,39 +100,39 @@ function fetchSounds(appfiles, audio_path) {
 
 function bufferSound(event) {
     var request = event.target;
-    var buffer = myAudioContext.createBuffer(request.response, false);
+    var buffer = context.createBuffer(request.response, false);
     myBuffers[request._soundName] = buffer;
 }
 
-function routeSound(source) {
-    myNodes.panner = myAudioContext.createPanner();
-    myNodes.volume = myAudioContext.createGainNode();
-    var volume = 1;
-    var panX = 3;
-    myNodes.panner.setPosition(panX, 0, 0);
-    myNodes.volume.gain.value = volume;
-    source.connect(myNodes.volume);
-    myNodes.panner.connect(myNodes.volume);
-    myNodes.volume.connect(myAudioContext.destination);
-    return source;
-}
+// function routeSound(source) {
+//     myNodes.panner = context.createPanner();
+//     myNodes.volume = context.createGainNode();
+//     var volume = 1;
+//     var panX = 3;
+//     myNodes.panner.setPosition(panX, 0, 0);
+//     myNodes.volume.gain.value = volume;
+//     source.connect(myNodes.volume);
+//     myNodes.panner.connect(myNodes.volume);
+//     myNodes.volume.connect(context.destination);
+//     return source;
+// }
 
-function playSound(soundFileToken, delayAfter) {
-    // create a new AudioBufferSourceNode
-    var source = myAudioContext.createBufferSource();
-    // console.log("soundFileToken %o", soundFileToken);
-    source.buffer = myBuffers[soundFileToken];
-    // = source.buffer.duration;
-    source.connect(myAudioContext.destination);
-    // play right now (0 seconds from now)
-    // can also pass myAudioContext.currentTime
-    // noteOn() has reportedly been deprecated but Safari requires it
-    // start() takes the place of noteOn() but Safari apparently doesn't support it yet
-    // source.start(0);
-    source.noteOn(0);
-    // TODO: Display blinking or throbbing Respond...
-    setTimeout(function(){return true;}, delayAfter + 500);
-}
+// function playSound(soundFileToken, delayAfter) {
+//     // create a new AudioBufferSourceNode
+//     var source = context.createBufferSource();
+//     // console.log("soundFileToken %o", soundFileToken);
+//     source.buffer = myBuffers[soundFileToken];
+//     // = source.buffer.duration;
+//     source.connect(context.destination);
+//     // play right now (0 seconds from now)
+//     // can also pass context.currentTime
+//     // noteOn() has reportedly been deprecated but Safari requires it
+//     // start() takes the place of noteOn() but Safari apparently doesn't support it yet
+//     // source.start(0);
+//     source.noteOn(0);
+//     // TODO: Display blinking or throbbing Respond...
+//     setTimeout(function(){return true;}, delayAfter + 500);
+// }
 
 function buildPresentedWord(hyphenatedWord) {
     var presentedWord = hyphenatedWord.replace(/-/g, " ");
@@ -154,47 +154,53 @@ function buildPresentedWord(hyphenatedWord) {
 //     setTimeout(function(){playSound(currentDialogue);}, 1000);
 // }
 
-function isPlaying (sourceBuffer) {
+function isPlaying (bufferSource) {
     setTimeout(function() {
-        if((sourceBuffer.playbackState === sourceBuffer.PLAYING_STATE || sourceBuffer.playbackState === sourceBuffer.FINISHED_STATE)) {
+        if((bufferSource.playbackState === bufferSource.PLAYING_STATE || bufferSource.playbackState === bufferSource.FINISHED_STATE)) {
             return true;
         }
     }, 0);
 }
 
 // display next interlocutor image and playback her side of the dialogue
-function playNextChoice(level, scenario, dIds) {
+function playChosenLevel(level, scenario, dIds) {
     // save final image and full dialogue base name for this level of proficiency
     var finalBaseFilename = dIds[level][dIds[level].length-1];
-    var fnames = scenario.length - 2;
-    for (var i = 0; i < fnames; i += 2) {
+    var files = scenario.length - 2;
+    var theseImages = [];
+    var theseLines = [];
+    for (var i = 0; i < files; i += 2) {
         var imageToken = "<img src=" + APPPATH + IMGPATH + scenario[i] + ".jpg \/>";
-        var audioToken = scenario[i];
-        var delay = scenario[i + 1];
-        var source = myAudioContext.createBufferSource();
+        var audioToken = scenario[ i ];
+        var delay = scenario[ i + 1 ];
+        theseImages.push(imageToken);
+        theseLines.push(audioToken);
+    }
 
-        $(".dialogue img").attr("src");
-        $(".dialogue img").replaceWith(imageToken);
-
+    for (var j in files/2) {
+        var source = context.createBufferSource();
+        
+        // $(".dialogue img").attr("src");
+        $(".dialogue img").replaceWith(theseImages[ j ]);
         // Playback interlocutor's side of the dialogue
-        source.buffer = myBuffers[audioToken];
-        source.connect(myAudioContext.destination);
+        source.buffer = myBuffers[theseLines[ j ]];
+        source.connect(context.destination);
         source.noteOn(0);
-        while (isPlaying(source)) {
+        while (isPlaying(source.buffer)) {
             // shuddup and listen        
         }
-        // source.noteOff(0);
-        // setTimeout(function(){playSound(scenario[i], delay);});
+    }    // source.noteOff(0);
+    // setTimeout(function(){playSound(scenario[i], delay);});
 
-        // if (!playSound(scenario[i]), delay){
-        //     // alert('Trouble playing sound ' + audioToken + ".m4a");
-        // }
-    }
-    // play final sound
-    // setTimeout(function(){playSound("z_final");}, 1250);
+    // if (!playSound(scenario[i]), delay){
+    //     // alert('Trouble playing sound ' + audioToken + ".m4a");
+    // }
 
-    alert("Here's where we would return to the game page");
+// play final sound
+// setTimeout(function(){playSound("z_final");}, 1250);
 
-    // return to game index page
-    // setTimeout(function(){window.location.href = "http://www.eslfornativespeakers.com/game.html";}, 2250);
+alert("Here's where we would return to the game page");
+
+// return to game index page
+// setTimeout(function(){window.location.href = "http://www.eslfornativespeakers.com/game.html";}, 2250);
 }
